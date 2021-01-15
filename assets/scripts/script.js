@@ -46,12 +46,12 @@ $( document ).ready(function() {
         $("#uvIndex").css("color", fontColor);
     }
 
-    // Current Weather Data API
+    // Current Weather Data API url
     function getQuery(city) {
         return "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
     }
 
-    // One Call API
+    // One Call API url
     function oneCall(lon,lat) {
         $.ajax({
             url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey,
@@ -91,47 +91,51 @@ $( document ).ready(function() {
         localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
     }
 
-    // Loads current weather data to main dashboard
+    // Sets the forcast for current day on the main dashboard
     function updateToday(x) {
-        var date = new Date(x.dt * 1000);
+        var date = new Date(x.dt * 1000);   // Converts the retrieved unix time
         var weatherIcon = $("<img>");
 
-        console.log(x);
-
-        $("#cityName").empty();
+        $("#cityName").empty();             // Empties h3 children to remove the last weather icon
+        $("#cityName").removeClass();       // Gets rid of initial padding due to new weather icon adding extra padding
 
         $("#cityName").text(x.name + " (" + (date.getMonth()) + 1 + "/" + date.getDate() + "/" + date.getFullYear() + ")");
         $("#tempNum").text((x.main.temp * 9/5 - 459.67).toFixed(2) + "°F" );
         $("#humidityNum").text(x.main.humidity + "%");
         $("#windSpeedNum").text((x.wind.speed).toFixed(2) + " MPH");
 
+        // Weather icon
         weatherIcon.attr("src", "http://openweathermap.org/img/wn/" + x.weather[0].icon + "@2x.png");
+        weatherIcon.attr("alt", x.weather[0].description);
         $("#cityName").append(weatherIcon);
 
         updateHistory(x);
         oneCall(x.coord.lon, x.coord.lat);
     }
 
-    // Loads weather data for the next 5 days
+    // Sets the forcast for the next 5 days
     function updateFiveDay(x) {
-        console.log(x);
         for (i = 1; i < 6; i++) {
-            var date = new Date((x.daily[i].dt) * 1000);
-            $("#day" + i).empty();
+            var date = new Date((x.daily[i].dt) * 1000);    // Converts the retrieved unix time
+            $("#day" + i).empty();                          // Clears previous results
 
             var newDate = $("<h5>");
             var newTemp = $("<p>");
             var newHumid = $("<p>");
-            var newIcon = $("<img>")
+            var newIcon = $("<img>");
 
             newDate.attr("class", "py-1");
             newTemp.attr("class", "py-1");
-            newIcon.attr("src", "http://openweathermap.org/img/wn/" + x.daily[i].weather[0].icon + "@2x.png")
+
+            // Weather icon
+            newIcon.attr("src", "http://openweathermap.org/img/wn/" + x.daily[i].weather[0].icon + "@2x.png");
+            newIcon.attr("alt", x.daily[i].weather[0].description);
 
             newDate.text("" + (date.getMonth()) + 1 + "/" + date.getDate() + "/" + date.getFullYear());
             newTemp.text("Temp: " + (x.daily[i].temp.day * 9/5 - 459.67).toFixed(2) + "°F" );
-            newHumid.text("Humidity: " + x.daily[i].humidity + "%")
+            newHumid.text("Humidity: " + x.daily[i].humidity + "%");
 
+            // i represents the numbered day
             $("#day" + i).append(newDate);
             $("#day" + i).append(newIcon);
             $("#day" + i).append(newTemp);
@@ -139,7 +143,7 @@ $( document ).ready(function() {
         }
     }
 
-    // City history buttons
+    // Clicking a city from the history list will search it again
     $(document).on("click", ".list-group-item", function() {
         var city = $(this).text();
 

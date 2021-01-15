@@ -13,6 +13,7 @@ h1{
 }
 
 .dayBlock {
+  text-align: center;
   font-size: 15px;
   max-width: 134px;
   min-width: 134px;
