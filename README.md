@@ -2,7 +2,7 @@
 
 ## Overview
 
-This application ultilizes the OpenWeather API to show the current weather conditions along with the forcast for the next 5 days along with a history of previous searches
+This application ultilizes the OpenWeather API to show the current weather conditions along with the forcast for the next 5 days. The last 10 cities searched are also saved and stored on the left-hand side of the page.
 
 ## Link to Application
 
