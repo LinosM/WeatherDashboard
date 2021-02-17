@@ -99,7 +99,7 @@ $( document ).ready(function() {
         $("#cityName").empty();             // Empties h3 children to remove the last weather icon
         $("#cityName").removeClass();       // Gets rid of initial padding due to new weather icon adding extra padding
 
-        $("#cityName").text(x.name + " (" + (date.getMonth()) + 1 + "/" + date.getDate() + "/" + date.getFullYear() + ")");
+        $("#cityName").text(x.name + " (" + ((parseInt(date.getMonth()) + 1))  + "/" + date.getDate() + "/" + date.getFullYear() + ")");
         $("#tempNum").text((x.main.temp * 9/5 - 459.67).toFixed(2) + "°F" );
         $("#humidityNum").text(x.main.humidity + "%");
         $("#windSpeedNum").text((x.wind.speed).toFixed(2) + " MPH");
@@ -131,7 +131,7 @@ $( document ).ready(function() {
             newIcon.attr("src", "http://openweathermap.org/img/wn/" + x.daily[i].weather[0].icon + "@2x.png");
             newIcon.attr("alt", x.daily[i].weather[0].description);
 
-            newDate.text("" + (date.getMonth()) + 1 + "/" + date.getDate() + "/" + date.getFullYear());
+            newDate.text("" + (parseInt(date.getMonth()) + 1)  + "/" + date.getDate() + "/" + date.getFullYear());
             newTemp.text("Temp: " + (x.daily[i].temp.day * 9/5 - 459.67).toFixed(2) + "°F" );
             newHumid.text("Humidity: " + x.daily[i].humidity + "%");
 
