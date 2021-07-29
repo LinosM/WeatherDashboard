@@ -11,3 +11,12 @@ https://linosm.github.io/WeatherDashboard/
 ## Preview 
 
 ![preview](https://i.imgur.com/rWviTtt.png)
+
+<a name="tech">
+	
+# Technology Used
+	
+- JavaScript
+- HTML
+- Bootstrap
+- jQuery
